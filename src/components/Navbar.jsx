@@ -1,9 +1,34 @@
+import axios from "axios";
 import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+import { removeUser } from "../utils/userSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logoutUser = async () => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/logout",
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeUser());
+      // console.log(res);
+      toast.success("Logout successful!", {
+        position: "top-center",
+      });
+      return setTimeout(() => navigate("/login"), 1000);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   return (
     <>
@@ -43,8 +68,9 @@ const Navbar = () => {
                   <a>Settings</a>
                 </li>
                 <li>
-                  <a>Logout</a>
+                  <Link onClick={logoutUser}>Logout</Link>
                 </li>
+                <ToastContainer position="top-center" />
               </ul>
             </div>
           </div>

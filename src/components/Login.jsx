@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const [email, setEmail] = useState("virat@gmail.com");
   const [password, setPassword] = useState("Virat@123");
+  const [err, setErr] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,6 +32,7 @@ const Login = () => {
       setTimeout(() => navigate("/"), 1000);
     } catch (e) {
       console.log(e);
+      setErr(e?.response?.data);
       toast.error("Login failed! Please check your credentials.", {
         position: "top-center",
       });
@@ -68,6 +70,9 @@ const Login = () => {
               />
             </label>
           </div>
+
+          {err && <p className="text-red-600">Error : {err} </p>}
+
           <div className="card-actions justify-center m-2">
             <button className="btn btn-primary" onClick={handleLogin}>
               Login
