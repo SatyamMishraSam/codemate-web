@@ -15,7 +15,7 @@ const Feed = () => {
       const res = await axios.get(BASE_URL + "/feed", {
         withCredentials: true,
       });
-      dispatch(addFeed(res?.data?.data));
+      dispatch(addFeed(res?.data));
     } catch (e) {
       console.log(e);
     }
@@ -25,7 +25,7 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  if (!feed) return ;
+  if (!feed) return;
   if (feed.length <= 0)
     return (
       <h1 className="flex justify-center my-10">
