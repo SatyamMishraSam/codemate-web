@@ -61,13 +61,13 @@ const Premium = () => {
       <div className="text-center text-white p-8 rounded-xl shadow-2xl bg-opacity-90">
         {/* Title Section */}
         <h1 className="text-5xl font-extrabold mb-6 animate__animated animate__fadeIn">
-          {user.firstName}, You are a Premium Member!
+          {user?.firstName}, You are a Premium Member!
         </h1>
 
         {/* Fancy Image with border and shadow */}
         <div className="mx-auto mb-6">
           <img
-            src={user.photoURL}
+            src={user?.photoURL}
             alt="Premium Member"
             className="rounded-full w-52 h-52 mx-auto border-4 border-white shadow-2xl hover:scale-105 transition-transform duration-300 ease-in-out"
           />
