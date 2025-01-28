@@ -30,6 +30,9 @@ const Connections = () => {
       <h1 className="text-bold text-3xl mt-8"> My Connections</h1>
 
       {connections.map((connection) => {
+        if (!connection) {
+          return null; // or a fallback JSX if you prefer
+        }
         const {
           _id,
           firstName,

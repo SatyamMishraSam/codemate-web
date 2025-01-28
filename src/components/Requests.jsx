@@ -10,6 +10,23 @@ const Requests = () => {
   const dispatch = useDispatch();
   const [showToast, setShowToast] = useState(false);
 
+  const reviewRequests = async (status, _id) => {
+    try {
+      const res = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + _id,
+        {},
+        { withCredentials: true }
+      );
+      dispatch(removeRequest(_id));
+      setShowToast(true);
+      setTimeout(() => {
+        setShowToast(false);
+      }, 3000);
+      // console.log(res);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   const fetchRequests = async () => {
     const res = await axios.get(BASE_URL + "/user/requests/recieved", {
       withCredentials: true,
@@ -17,25 +34,15 @@ const Requests = () => {
     dispatch(addRequests(res.data.data));
   };
 
-  const reviewRequests = async (status, _id) => {
-    const res = await axios.post(
-      BASE_URL + "/request/review/" + status + "/" + _id,
-      {},
-      { withCredentials: true }
-    );
-    dispatch(removeRequest(_id));
-    setShowToast(true);
-    setTimeout(() => {
-      setShowToast(false);
-    }, 3000);
-    // console.log(res);
-  };
-
   useEffect(() => {
     fetchRequests();
   }, []);
+
+  console.log(requests);
+
   if (!requests) return;
-  if (requests.length === 0)
+
+  if (!requests || requests.length === 0)
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-base-100">
         <div className="relative">
@@ -72,6 +79,9 @@ const Requests = () => {
       <h1 className="text-bold text-3xl mt-8"> My Requests</h1>
 
       {requests.map((request) => {
+        if (!request.fromUserId) {
+          return null; // or a fallback JSX if you prefer
+        }
         const {
           _id,
           firstName,
@@ -82,6 +92,7 @@ const Requests = () => {
           photoURL,
           gender,
         } = request.fromUserId;
+        console.log(_id);
 
         return (
           <>

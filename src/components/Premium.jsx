@@ -1,9 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
+import { useSelector } from "react-redux";
 
 const Premium = () => {
   const [isUserPremium, setIsUserPremium] = useState(false);
+  const user = useSelector((store) => store.user);
+  console.log(user);
 
   const verifyPremiumUser = async () => {
     const res = await axios.get(BASE_URL + "/premium/verify", {
@@ -54,7 +57,56 @@ const Premium = () => {
   };
 
   return isUserPremium ? (
-    "You are premium user"
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r bg-base-200">
+      <div className="text-center text-white p-8 rounded-xl shadow-2xl bg-opacity-90">
+        {/* Title Section */}
+        <h1 className="text-5xl font-extrabold mb-6 animate__animated animate__fadeIn">
+          {user.firstName}, You are a Premium Member!
+        </h1>
+
+        {/* Fancy Image with border and shadow */}
+        <div className="mx-auto mb-6">
+          <img
+            src={user.photoURL}
+            alt="Premium Member"
+            className="rounded-full w-52 h-52 mx-auto border-4 border-white shadow-2xl hover:scale-105 transition-transform duration-300 ease-in-out"
+          />
+        </div>
+
+        {/* Subtitle with a nice icon */}
+        <div className="text-xl mb-8 text-gray-200">
+          <p className="flex justify-center items-center space-x-2">
+            <svg
+              className="w-6 h-6 text-yellow-400"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M8 17l4 4 4-4M12 3v14"
+              />
+            </svg>
+            <span>Unlock exclusive features, benefits, and more!</span>
+          </p>
+        </div>
+
+        {/* Button to access Premium features */}
+        <div>
+          {/* <button className="btn btn-accent px-8 py-4 text-lg font-semibold transition-all duration-200 ease-in-out hover:bg-blue-500 focus:ring-2 focus:ring-blue-600">
+            Access Premium Content
+          </button> */}
+        </div>
+
+        {/* Bottom Note */}
+        <div className="mt-6 text-sm text-gray-300">
+          <p>Thank you for being a part of our premium community!</p>
+        </div>
+      </div>
+    </div>
   ) : (
     <div>
       <div className="p-8 bg-base-100">
@@ -73,7 +125,7 @@ const Premium = () => {
                 For developers who are just starting to connect.
               </p>
               <div className="text-4xl font-bold text-white-200 mt-4">
-                $9.99/month
+                ₹ 300 /month
               </div>
 
               <ul className="list-disc mt-4 text-left px-6">
@@ -99,7 +151,7 @@ const Premium = () => {
                 For developers who want more visibility and connections.
               </p>
               <div className="text-4xl font-bold text-white-200 mt-4">
-                $19.99/month
+                ₹ 800/month
               </div>
 
               <ul className="list-disc mt-4 text-left px-6">
