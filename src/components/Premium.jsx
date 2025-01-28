@@ -1,8 +1,23 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
 
 const Premium = () => {
+  const [isUserPremium, setIsUserPremium] = useState(false);
+
+  const verifyPremiumUser = async () => {
+    const res = await axios.get(BASE_URL + "/premium/verify", {
+      withCredentials: true,
+    });
+    if (res.data.isPremium) {
+      setIsUserPremium(true);
+    }
+  };
+
+  useEffect(() => {
+    verifyPremiumUser();
+  }, []);
+
   const handlePlans = async (planType) => {
     const order = await axios.post(
       BASE_URL + "/payment/create",
@@ -31,13 +46,16 @@ const Premium = () => {
       theme: {
         color: "#F37254",
       },
+      handler: verifyPremiumUser,
     };
 
     const rzp = new window.Razorpay(options);
-    rzp.open();
+    rzp.open(); // for openning the popup
   };
 
-  return (
+  return isUserPremium ? (
+    "You are premium user"
+  ) : (
     <div>
       <div className="p-8 bg-base-100">
         <div className="max-w-screen-lg mx-auto text-center">
