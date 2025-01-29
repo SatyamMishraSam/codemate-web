@@ -43,8 +43,8 @@ const Chat = () => {
     socket.emit("joinChat", {
       loggedInUser,
       targetUserId,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user?.firstName,
+      lastName: user?.lastName,
     });
 
     // msgReceived is from backend emit when anybody send the msgs and we are passing firstName and newMSg from backend
@@ -65,8 +65,8 @@ const Chat = () => {
       loggedInUser,
       targetUserId,
       text: newMsg,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user?.firstName,
+      lastName: user?.lastName,
     });
     setNewMsg("");
   };
@@ -77,19 +77,19 @@ const Chat = () => {
       <div className="flex-1 overflow-scroll p-5">
         {msgs.map((msg, index) => {
           //   console.log(msg);
-          console.log(user.firstName);
+          //   console.log(user.firstName);
           return (
             <div
               key={index}
               className={
                 "chat " +
-                (user.firstName === msg.firstName ? "chat-end" : "chat-start")
+                (user?.firstName === msg?.firstName ? "chat-end" : "chat-start")
               }
             >
               <div className="chat-header">
-                {msg.firstName + " " + msg.lastName}
+                {msg?.firstName + " " + msg?.lastName}
               </div>
-              <div className="chat-bubble">{msg.text}</div>
+              <div className="chat-bubble">{msg?.text}</div>
             </div>
           );
         })}
