@@ -58,7 +58,7 @@ const Premium = () => {
 
   return isUserPremium ? (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r bg-base-200">
-      <div className="text-center text-white p-8 rounded-xl shadow-2xl bg-opacity-90">
+      <div className="text-center text-white border border-white p-8 rounded-xl shadow-2xl bg-opacity-90">
         {/* Title Section */}
         <h1 className="text-5xl font-extrabold mb-6 animate__animated animate__fadeIn">
           {user?.firstName}, You are a Premium Member!
